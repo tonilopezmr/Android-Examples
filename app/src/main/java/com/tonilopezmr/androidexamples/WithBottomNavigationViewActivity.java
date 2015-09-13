@@ -39,7 +39,6 @@ public class WithBottomNavigationViewActivity extends AppCompatActivity{
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -62,7 +61,8 @@ public class WithBottomNavigationViewActivity extends AppCompatActivity{
     private void setUpBodyNavigationView(NavigationView bodyNavigationView) {
         bodyNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         drawer.closeDrawers();
                         textView.setText(menuItem.getTitle());

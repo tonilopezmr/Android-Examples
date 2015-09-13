@@ -14,6 +14,22 @@
         <item android:id="@+id/nav_manage"
             android:icon="@android:drawable/ic_menu_manage"
             android:title="Tools" />
+        <item
+            android:id="@+id/take"
+            android:icon="@android:drawable/ic_menu_camera"
+            android:title="Thake photo" />
+        <item
+            android:id="@+id/cool"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Cool Gallery" />
+        <item
+            android:id="@+id/play"
+            android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="Play Video" />
+        <item
+            android:id="@+id/wrench"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="Wrench" />
     </group>
 
 
