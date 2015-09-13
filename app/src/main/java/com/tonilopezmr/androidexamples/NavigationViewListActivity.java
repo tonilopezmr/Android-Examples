@@ -17,7 +17,11 @@ public class NavigationViewListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        String[] activityList = {"Normal NavigationView", "NavigationView with fixed footer"};
+        String[] activityList = {
+                "Normal NavigationView",
+                "NavigationView with fixed footer",
+                "NavigationView below toolbar"
+        };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, activityList);
@@ -34,6 +38,9 @@ public class NavigationViewListActivity extends ListActivity {
                 break;
             case 1:
                 startActivity(new Intent(NavigationViewListActivity.this, WithBottomNavigationViewActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(NavigationViewListActivity.this, NavigationViewBelowToolbarActivity.class));
                 break;
         }
     }

@@ -22,21 +22,21 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.NavigationView
-                android:id="@+id/navigation_drawer_body"
+                android:id="@+id/navigation_view_body"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
                 app:headerLayout="@layout/nav_header_main"
-                app:menu="@menu/body"
-                android:layout_above="@+id/navigation_drawer_bottom"/>
+                app:menu="@menu/body_nav"
+                android:layout_above="@+id/navigation_view_bottom"/>
 
             <android.support.design.widget.NavigationView
-                android:id="@+id/navigation_drawer_bottom"
+                android:id="@+id/navigation_view_bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 app:headerLayout="@layout/bottom_nav_header"
-                app:menu="@menu/bottom" />
+                app:menu="@menu/footer_nav" />
 
         </RelativeLayout>
 

@@ -31,8 +31,8 @@ public class WithBottomNavigationViewActivity extends AppCompatActivity{
         textView = (TextView) findViewById(R.id.text_view);
         drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         containerNavigationView = (NavigationView)findViewById(R.id.navigation_drawer_container);
-        bodyNavigationView = (NavigationView)findViewById(R.id.navigation_drawer_body);
-        bottomNavigationView = (NavigationView)findViewById(R.id.navigation_drawer_bottom);
+        bodyNavigationView = (NavigationView)findViewById(R.id.navigation_view_body);
+        bottomNavigationView = (NavigationView)findViewById(R.id.navigation_view_bottom);
 
         setUpBodyNavigationView(bodyNavigationView);
         setupBottomNavigationView(bottomNavigationView);

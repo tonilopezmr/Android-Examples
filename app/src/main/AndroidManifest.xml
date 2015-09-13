@@ -23,6 +23,9 @@
         <activity
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".NormalNavigationViewActivity"/>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".NavigationViewBelowToolbarActivity"/>
     </application>
 
 </manifest>
