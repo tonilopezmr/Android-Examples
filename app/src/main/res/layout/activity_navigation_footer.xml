@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_drawer_container"
@@ -20,20 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            app:headerLayout="@layout/nav_header"
-            app:menu="@menu/subjects_menu" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider" />
+            app:headerLayout="@layout/nav_header_main"
+            app:menu="@menu/body" />
 
         <android.support.design.widget.NavigationView
             android:id="@+id/navigation_drawer_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:menu="@menu/drawer_view" />
+            app:headerLayout="@layout/bottom_nav_header"
+            app:menu="@menu/bottom" />
 
     </android.support.design.widget.NavigationView>
 
