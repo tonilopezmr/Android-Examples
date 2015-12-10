@@ -1,1 +1,1 @@
-include ':navigationview'
+include ':navigationview', ':animations', ':login'
