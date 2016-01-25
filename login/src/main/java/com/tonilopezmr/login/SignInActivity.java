@@ -41,12 +41,23 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        this.signInManager = new SignInManager(getApplicationContext());
-        this.signInGoogle = new SignInGoogle(this, signInManager);
-        this.signInTwitter = new SignInTwitter(this, signInManager);
+    }
+
+    protected void init(){
+        this.signInManager = SignInManager.getInstance(getApplicationContext());
+        this.signInGoogle = new SignInGoogle(this);
+
+        signInManager.init(signInGoogle, signInFacebook, signInTwitter);
+
+        if (signInManager.hasConnectedOnPhone()){
+            userIsLogged();
+        }else{
+            userIsntLogged();
+        }
     }
 
     protected void prepareLogin(TwitterLoginButton twitterButton){
+        this.signInTwitter = new SignInTwitter(this);
         this.twitterLoginButton = twitterButton;
         //Twitter
         this.twitterLoginButton.setCallback(new Callback<TwitterSession>() {
@@ -59,6 +70,7 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
                 // with your app's user model
                 String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                signInManager.linkProvider(signInTwitter);
                 signInTwitter.connect();
             }
             @Override
@@ -76,7 +88,7 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
             @Override
             public void onSuccess(LoginResult loginResult) {
                 signInFacebook.request(loginResult);
-                Toast.makeText(getApplicationContext(), "asdf", Toast.LENGTH_LONG).show();
+                signInManager.linkProvider(signInFacebook);
             }
 
             @Override
@@ -105,36 +117,18 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
     }
 
     protected void connect(){
-            switch (signInManager.getProvidedLogged()){
-                case SignInGoogle.GOOGLE_PROVIDER:
-                    signInGoogle.connect();
-                    break;
-                case SignInFacebook.FACEBOOK_PROVIDER:
-                    signInFacebook.connect();
-                    break;
-                case SignInTwitter.TWITTER_PROVIDER:
-                    signInTwitter.connect();
-                    break;
+        if (signInManager.hasConnectedOnPhone()){
+            Provider provider = signInManager.getCurrentProvider();
+            if (provider != null){
+                provider.connect();
             }
+        }
     }
 
     protected void disconnect(){
-        if (signInManager.hasConnectedOnPhone()){
-            switch (signInManager.getProvidedLogged()){
-                case SignInGoogle.GOOGLE_PROVIDER:
-                    signInGoogle.disconnect();
-                    break;
-                case SignInFacebook.FACEBOOK_PROVIDER:
-                    signInFacebook.disconnect();
-                    break;
-                case SignInTwitter.TWITTER_PROVIDER:
-                    signInTwitter.disconnect();
-                    break;
-                default:
-                    signInGoogle.disconnect();
-                    signInFacebook.disconnect();
-                    signInTwitter.disconnect();
-            }
+        Provider provider = signInManager.getCurrentProvider();
+        if (signInManager.hasConnectedOnPhone() && provider!=null){
+            provider.disconnect();
         }
     }
 
@@ -150,7 +144,11 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
         super.onPause();
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
+        signInManager.unlinkProvider();
     }
 
-    protected abstract void onConnectionComplete(PersonProfile person);
+    public abstract void userIsLogged();
+    public abstract void errorOnConnect();
+    public abstract void userIsntLogged();
+    public abstract void onConnectionComplete(PersonProfile person);
 }

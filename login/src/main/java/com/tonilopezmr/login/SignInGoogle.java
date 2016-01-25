@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Antonio López Marín <tonilopezmr.github.io>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.tonilopezmr.login;
 
 import android.app.Activity;
@@ -29,7 +45,7 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
     private SignInManager signInManager;
     private SignInActivity activity;
 
-    public SignInGoogle(SignInActivity activity, SignInManager manager) {
+    public SignInGoogle(SignInActivity activity) {
         this.googleApiClient =  new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -37,7 +53,7 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
                 .addScope(new Scope(Scopes.PLUS_LOGIN))
                 .addScope(new Scope(Scopes.PLUS_ME))
                 .build();
-        this.signInManager = manager;
+        this.signInManager = SignInManager.getInstance(activity.getApplicationContext());
         this.activity = activity;
     }
 
@@ -83,6 +99,7 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
 
     @Override
     public void onConnected(Bundle bundle) {
+        signInManager.linkProvider(this);
         signInClicked = false;
         signInManager.storeUserLogedInPreferences(this);
         if (Plus.PeopleApi.getCurrentPerson(googleApiClient) != null) {

@@ -35,7 +35,7 @@ public class SignInFacebook implements Provider {
     public SignInFacebook(SignInActivity signInActivity, LoginButton loginButton){
         this.loginButton = loginButton;
         this.callbackManager = CallbackManager.Factory.create();
-        this.signInManager = new SignInManager(signInActivity.getApplicationContext());
+        this.signInManager = SignInManager.getInstance(signInActivity.getApplicationContext());
         this.activity = signInActivity;
     }
 

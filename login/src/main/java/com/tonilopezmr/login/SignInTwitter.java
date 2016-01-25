@@ -20,9 +20,9 @@ public class SignInTwitter implements Provider {
     private SignInManager manager;
     private SignInActivity signInActivity;
 
-    public SignInTwitter(SignInActivity signInActivity, SignInManager signInManager) {
+    public SignInTwitter(SignInActivity signInActivity) {
         this.signInActivity = signInActivity;
-        this.manager = signInManager;
+        this.manager = SignInManager.getInstance(signInActivity.getApplicationContext());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SignInTwitter implements Provider {
 
                     @Override
                     public String getEmail() {
-                        return user.screenName;
+                        return user.email;
                     }
 
                     @Override

@@ -71,24 +71,33 @@ public class LoginActivity extends SignInActivity {
             }
         });
 
-
-        //Common
-        if (signInManager.hasConnectedOnPhone()) {
-            signInButton.setEnabled(false);
-            loginButton.setEnabled(false);
-            twitterLoginButton.setEnabled(false);
-            signOutButton.setEnabled(true);
-            connect();
-        }else{
-            loginButton.setEnabled(true);
-            twitterLoginButton.setEnabled(true);
-            signInButton.setEnabled(true);
-            signOutButton.setEnabled(false);
-        }
+        init();
     }
 
     @Override
-    protected void onConnectionComplete(PersonProfile person) {
+    public void userIsLogged() {
+        signInButton.setEnabled(false);
+        loginButton.setEnabled(false);
+        twitterLoginButton.setEnabled(false);
+        signOutButton.setEnabled(true);
+        connect();
+    }
+
+    @Override
+    public void errorOnConnect() {
+
+    }
+
+    @Override
+    public void userIsntLogged() {
+        loginButton.setEnabled(true);
+        twitterLoginButton.setEnabled(true);
+        signInButton.setEnabled(true);
+        signOutButton.setEnabled(false);
+    }
+
+    @Override
+    public void onConnectionComplete(PersonProfile person) {
         if (person != null){
             Toast.makeText(getApplicationContext(), "User: "+ person.getId(), Toast.LENGTH_LONG).show();
             Picasso.with(getApplicationContext()).load(person.getImageUri()).into(imageView);
