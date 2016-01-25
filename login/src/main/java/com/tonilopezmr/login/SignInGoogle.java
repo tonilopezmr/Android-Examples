@@ -25,6 +25,7 @@ import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
@@ -159,5 +160,9 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
             googleApiClient.disconnect();
         }
         signInManager.storeUserLogedOutInPreferences();
+    }
+
+    public interface LoginGoogle {
+        SignInButton getLoginGoogleButton();
     }
 }

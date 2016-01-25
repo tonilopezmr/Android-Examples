@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
@@ -18,8 +17,6 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-
 /**
  * @author Antonio López.
  */
@@ -28,21 +25,13 @@ public class SignInFacebook implements Provider {
     public static final String FACEBOOK_PROVIDER = "Facebook";
 
     private CallbackManager callbackManager;
-    private LoginButton loginButton;
     private SignInManager signInManager;
     private SignInActivity activity;
 
-    public SignInFacebook(SignInActivity signInActivity, LoginButton loginButton){
-        this.loginButton = loginButton;
+    public SignInFacebook(SignInActivity signInActivity){
         this.callbackManager = CallbackManager.Factory.create();
         this.signInManager = SignInManager.getInstance(signInActivity.getApplicationContext());
         this.activity = signInActivity;
-    }
-
-
-    public void prepareLogin(CallbackManager callbackManager, FacebookCallback<LoginResult> facebookCallback){
-        loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
-        loginButton.registerCallback(callbackManager, facebookCallback);
     }
 
     public void request(LoginResult loginResult) {
@@ -123,4 +112,7 @@ public class SignInFacebook implements Provider {
         return FACEBOOK_PROVIDER;
     }
 
+    public interface LoginFacebook {
+        LoginButton getLoginFacebookButton();
+    }
 }

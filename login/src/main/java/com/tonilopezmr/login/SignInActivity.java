@@ -14,6 +14,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.SignInButton;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -25,7 +26,8 @@ import java.util.Arrays;
 /**
  * @author Antonio López.
  */
-public abstract class SignInActivity extends AppCompatActivity implements  View.OnClickListener {
+public abstract class SignInActivity extends AppCompatActivity 
+        implements SignInFacebook.LoginFacebook, SignInTwitter.LoginTwitter, SignInGoogle.LoginGoogle {
 
     protected SignInGoogle signInGoogle;
     protected SignInFacebook signInFacebook;
@@ -33,9 +35,11 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
     protected SignInManager signInManager;
 
     protected CallbackManager callbackManager;
-    protected LoginButton loginButton;
+    protected LoginButton facebookLoginButton;
 
     protected TwitterLoginButton twitterLoginButton;
+
+    protected SignInButton signInGoogleButton;
 
       @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +49,11 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
 
     protected void init(){
         this.signInManager = SignInManager.getInstance(getApplicationContext());
-        this.signInGoogle = new SignInGoogle(this);
-
+        
+        initFacebook();
+        initTwitter();
+        initGoogle();
+        
         signInManager.init(signInGoogle, signInFacebook, signInTwitter);
 
         if (signInManager.hasConnectedOnPhone()){
@@ -56,9 +63,16 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
         }
     }
 
-    protected void prepareLogin(TwitterLoginButton twitterButton){
+    private void initGoogle(){
+        this.signInGoogle = new SignInGoogle(this);
+
+        this.signInGoogleButton = getLoginGoogleButton();
+        this.signInGoogleButton.setOnClickListener(new OnGoogleClickListener());
+    }
+
+    private void initTwitter(){
         this.signInTwitter = new SignInTwitter(this);
-        this.twitterLoginButton = twitterButton;
+        this.twitterLoginButton = getLoginTwitterButton();
         //Twitter
         this.twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
@@ -76,15 +90,17 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
             @Override
             public void failure(TwitterException exception) {
                 Log.d("TwitterKit", "Login with Twitter failure", exception);
+                errorOnConnect();
             }
         });
     }
 
-    protected void prepareLogin(CallbackManager callbackManager, LoginButton button) {
-        this.loginButton = button;
-        this.loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
-        this.signInFacebook = new SignInFacebook(this, loginButton);
-        signInFacebook.prepareLogin(callbackManager, new FacebookCallback<LoginResult>() {
+    private void initFacebook() {
+        this.callbackManager = CallbackManager.Factory.create();
+        this.facebookLoginButton = getLoginFacebookButton();
+        this.facebookLoginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
+        this.signInFacebook = new SignInFacebook(this);
+        this.facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 signInFacebook.request(loginResult);
@@ -98,16 +114,10 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
 
             @Override
             public void onError(FacebookException error) {
-
+                errorOnConnect();
             }
         });
     }
-
-    @Override
-    public void onClick(View view) {
-        signInGoogle.onGoogleButtonClick(view);
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -145,6 +155,14 @@ public abstract class SignInActivity extends AppCompatActivity implements  View.
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
         signInManager.unlinkProvider();
+    }
+
+    final private class OnGoogleClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            signInGoogle.onGoogleButtonClick(view);
+        }
     }
 
     public abstract void userIsLogged();

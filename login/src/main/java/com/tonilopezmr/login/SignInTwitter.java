@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.core.models.User;
 
 import retrofit.Callback;
@@ -81,5 +82,9 @@ public class SignInTwitter implements Provider {
     @Override
     public String getName() {
         return TWITTER_PROVIDER;
+    }
+
+    public interface LoginTwitter {
+        TwitterLoginButton getLoginTwitterButton();
     }
 }

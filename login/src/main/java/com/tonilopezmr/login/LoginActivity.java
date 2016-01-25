@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.SignInButton;
 import com.squareup.picasso.Picasso;
@@ -34,7 +33,6 @@ public class LoginActivity extends SignInActivity {
     private static final String TWITTER_KEY = "VS8IpmwlBd7VOWqsmmrAtX6eS";
     private static final String TWITTER_SECRET = "bIojcMjUiH30qruY9fUW5sPQkYuZeKAb79gsTSXebHujN82m8j";
 
-    private SignInButton signInButton;
     private Button signOutButton;
     private ImageView imageView;
     private TextView userName;
@@ -51,18 +49,6 @@ public class LoginActivity extends SignInActivity {
         userName = (TextView)findViewById(R.id.user_name);
         userEmail = (TextView)findViewById(R.id.user_email);
 
-        //twitter
-        prepareLogin((TwitterLoginButton) findViewById(R.id.twitter_login_button));
-
-        //facebook
-        this.callbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton =   (LoginButton) findViewById(R.id.login_button);
-        prepareLogin(callbackManager, loginButton);
-
-        //Google
-        signInButton = (SignInButton)findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(this);
-
         signOutButton = (Button)findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +62,8 @@ public class LoginActivity extends SignInActivity {
 
     @Override
     public void userIsLogged() {
-        signInButton.setEnabled(false);
-        loginButton.setEnabled(false);
+        signInGoogleButton.setEnabled(false);
+        facebookLoginButton.setEnabled(false);
         twitterLoginButton.setEnabled(false);
         signOutButton.setEnabled(true);
         connect();
@@ -90,9 +76,9 @@ public class LoginActivity extends SignInActivity {
 
     @Override
     public void userIsntLogged() {
-        loginButton.setEnabled(true);
+        facebookLoginButton.setEnabled(true);
         twitterLoginButton.setEnabled(true);
-        signInButton.setEnabled(true);
+        signInGoogleButton.setEnabled(true);
         signOutButton.setEnabled(false);
     }
 
@@ -103,9 +89,9 @@ public class LoginActivity extends SignInActivity {
             Picasso.with(getApplicationContext()).load(person.getImageUri()).into(imageView);
             userName.setText(person.getName());
             userEmail.setText(person.getEmail());
-            signInButton.setEnabled(false);
+            facebookLoginButton.setEnabled(false);
             twitterLoginButton.setEnabled(false);
-            loginButton.setEnabled(false);
+            signInGoogleButton.setEnabled(false);
             signOutButton.setEnabled(true);
         }
     }
@@ -113,9 +99,24 @@ public class LoginActivity extends SignInActivity {
     private void signOut(){
         disconnect();
         twitterLoginButton.setEnabled(true);
-        signInButton.setEnabled(true);
-        loginButton.setEnabled(true);
+        facebookLoginButton.setEnabled(true);
+        signInGoogleButton.setEnabled(true);
         signOutButton.setEnabled(false);
+    }
+
+    @Override
+    public LoginButton getLoginFacebookButton() {
+        return (LoginButton) findViewById(R.id.login_button);
+    }
+
+    @Override
+    public TwitterLoginButton getLoginTwitterButton() {
+        return (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+    }
+
+    @Override
+    public SignInButton getLoginGoogleButton() {
+        return (SignInButton)findViewById(R.id.sign_in_button);
     }
 
     /**
