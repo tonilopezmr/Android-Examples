@@ -1,12 +1,10 @@
 package com.tonilopezmr.login;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
@@ -24,12 +22,10 @@ public class SignInFacebook implements Provider {
 
     public static final String FACEBOOK_PROVIDER = "Facebook";
 
-    private CallbackManager callbackManager;
     private SignInManager signInManager;
     private SignInActivity activity;
 
     public SignInFacebook(SignInActivity signInActivity){
-        this.callbackManager = CallbackManager.Factory.create();
         this.signInManager = SignInManager.getInstance(signInActivity.getApplicationContext());
         this.activity = signInActivity;
     }
@@ -101,10 +97,6 @@ public class SignInFacebook implements Provider {
     public void disconnect() {
         LoginManager.getInstance().logOut();
         signInManager.storeUserLogedOutInPreferences();
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

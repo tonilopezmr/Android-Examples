@@ -1,8 +1,11 @@
 package com.tonilopezmr.login;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.core.models.User;
@@ -50,7 +53,7 @@ public class SignInTwitter implements Provider {
 
                     @Override
                     public String getEmail() {
-                        return user.email;
+                        return user.screenName;
                     }
 
                     @Override
@@ -62,7 +65,7 @@ public class SignInTwitter implements Provider {
 
             @Override
             public void failure(RetrofitError error) {
-
+                signInActivity.errorOnConnect();
             }
         });
     }
@@ -84,7 +87,27 @@ public class SignInTwitter implements Provider {
         return TWITTER_PROVIDER;
     }
 
+    public TwitterCallBack getCallback(){
+        return new TwitterCallBack();
+    }
+
     public interface LoginTwitter {
         TwitterLoginButton getLoginTwitterButton();
+    }
+
+    public class TwitterCallBack extends com.twitter.sdk.android.core.Callback<TwitterSession> {
+        @Override
+        public void success(Result<TwitterSession> result) {
+            // The TwitterSession is also available through:
+            // Twitter.getInstance().core.getSessionManager().getActiveSession()
+            TwitterSession session = result.data;
+            manager.linkProvider(SignInTwitter.this);
+            connect(session);
+        }
+        @Override
+        public void failure(TwitterException exception) {
+            Log.d("TwitterKit", "Login with Twitter failure", exception);
+            signInActivity.errorOnConnect();
+        }
     }
 }
