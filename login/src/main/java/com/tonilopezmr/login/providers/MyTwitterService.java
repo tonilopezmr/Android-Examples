@@ -1,4 +1,4 @@
-package com.tonilopezmr.login;
+package com.tonilopezmr.login.providers;
 
 import com.twitter.sdk.android.core.models.User;
 

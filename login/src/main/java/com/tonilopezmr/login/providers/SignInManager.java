@@ -1,4 +1,4 @@
-package com.tonilopezmr.login;
+package com.tonilopezmr.login.providers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
