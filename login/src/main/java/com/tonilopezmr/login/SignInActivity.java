@@ -30,7 +30,7 @@ import retrofit.client.Response;
  * @author Antonio López.
  */
 public abstract class SignInActivity extends AppCompatActivity 
-        implements SignInFacebook.LoginFacebook, SignInTwitter.LoginTwitter, SignInGoogle.LoginGoogle {
+        implements SignInView, SignInFacebook.LoginFacebook, SignInTwitter.LoginTwitter, SignInGoogle.LoginGoogle {
 
     protected SignInGoogle signInGoogle;
     protected SignInFacebook signInFacebook;
@@ -188,9 +188,4 @@ public abstract class SignInActivity extends AppCompatActivity
             signInGoogle.onGoogleButtonClick(view);
         }
     }
-
-    public abstract void userIsLogged();
-    public abstract void errorOnConnect();
-    public abstract void userIsntLogged();
-    public abstract void onConnectionComplete(UserProfile person);
 }

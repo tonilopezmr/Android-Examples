@@ -3,7 +3,7 @@ package com.tonilopezmr.login;
 /**
  * @author Antonio López.
  */
-public interface SignInUI {
+public interface SignInView {
     void userIsLogged();
     void errorOnConnect();
     void userIsntLogged();
