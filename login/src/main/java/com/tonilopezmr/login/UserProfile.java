@@ -5,7 +5,7 @@ import android.net.Uri;
 /**
  * @author Antonio López.
  */
-public interface PersonProfile {
+public interface UserProfile {
     String getId();
     String getName();
     String getEmail();

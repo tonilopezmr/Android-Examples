@@ -1,4 +1,4 @@
-package com.tonilopezmr.login.providers;
+package com.tonilopezmr.login.providers.twitter;
 
 import com.twitter.sdk.android.core.Session;
 import com.twitter.sdk.android.core.TwitterApiClient;

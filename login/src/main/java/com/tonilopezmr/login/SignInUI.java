@@ -7,5 +7,5 @@ public interface SignInUI {
     void userIsLogged();
     void errorOnConnect();
     void userIsntLogged();
-    void onConnectionComplete(PersonProfile person);
+    void onConnectionComplete(UserProfile person);
 }

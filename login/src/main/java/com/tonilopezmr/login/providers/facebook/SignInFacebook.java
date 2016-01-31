@@ -1,4 +1,4 @@
-package com.tonilopezmr.login.providers;
+package com.tonilopezmr.login.providers.facebook;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.tonilopezmr.login.SignInActivity;
+import com.tonilopezmr.login.providers.Provider;
+import com.tonilopezmr.login.providers.SignInManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

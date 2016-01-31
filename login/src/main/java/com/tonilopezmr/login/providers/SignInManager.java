@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.tonilopezmr.login.providers.facebook.SignInFacebook;
+import com.tonilopezmr.login.providers.google.SignInGoogle;
+import com.tonilopezmr.login.providers.twitter.SignInTwitter;
+
 /**
  * @author Antonio López.
  */

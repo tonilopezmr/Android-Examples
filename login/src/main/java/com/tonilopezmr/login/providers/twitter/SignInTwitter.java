@@ -1,8 +1,10 @@
-package com.tonilopezmr.login.providers;
+package com.tonilopezmr.login.providers.twitter;
 
 import android.util.Log;
 
 import com.tonilopezmr.login.SignInActivity;
+import com.tonilopezmr.login.providers.Provider;
+import com.tonilopezmr.login.providers.SignInManager;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;

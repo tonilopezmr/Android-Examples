@@ -13,10 +13,10 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.SignInButton;
 import com.tonilopezmr.login.providers.Provider;
-import com.tonilopezmr.login.providers.SignInFacebook;
-import com.tonilopezmr.login.providers.SignInGoogle;
+import com.tonilopezmr.login.providers.facebook.SignInFacebook;
+import com.tonilopezmr.login.providers.google.SignInGoogle;
 import com.tonilopezmr.login.providers.SignInManager;
-import com.tonilopezmr.login.providers.SignInTwitter;
+import com.tonilopezmr.login.providers.twitter.SignInTwitter;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.core.models.User;
 
@@ -78,7 +78,7 @@ public abstract class SignInActivity extends AppCompatActivity
         this.signInTwitter.setTwitterCallback(new Callback<User>() {
             @Override
             public void success(final User user, Response response) {
-                onConnectionComplete(new PersonProfile() {
+                onConnectionComplete(new UserProfile() {
                     @Override
                     public String getId() {
                         return user.idStr;
@@ -119,7 +119,7 @@ public abstract class SignInActivity extends AppCompatActivity
         this.signInFacebook.setOnLoginCallback(new SignInFacebook.OnLoginFacebookCallback() {
             @Override
             public void onCompleted(final Profile profile, final String email) {
-                onConnectionComplete(new PersonProfile() {
+                onConnectionComplete(new UserProfile() {
                     @Override
                     public String getId() {
                         return profile.getId();
@@ -183,7 +183,6 @@ public abstract class SignInActivity extends AppCompatActivity
     }
 
     final private class OnGoogleClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View view) {
             signInGoogle.onGoogleButtonClick(view);
@@ -193,5 +192,5 @@ public abstract class SignInActivity extends AppCompatActivity
     public abstract void userIsLogged();
     public abstract void errorOnConnect();
     public abstract void userIsntLogged();
-    public abstract void onConnectionComplete(PersonProfile person);
+    public abstract void onConnectionComplete(UserProfile person);
 }

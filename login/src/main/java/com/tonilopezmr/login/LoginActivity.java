@@ -83,7 +83,7 @@ public class LoginActivity extends SignInActivity {
     }
 
     @Override
-    public void onConnectionComplete(PersonProfile person) {
+    public void onConnectionComplete(UserProfile person) {
         if (person != null){
             Toast.makeText(getApplicationContext(), "User: "+ person.getId(), Toast.LENGTH_LONG).show();
             Picasso.with(getApplicationContext()).load(person.getImageUri()).into(imageView);

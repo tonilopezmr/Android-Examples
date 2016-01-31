@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tonilopezmr.login.providers;
+package com.tonilopezmr.login.providers.google;
 
 import android.app.Activity;
 import android.content.IntentSender;
@@ -30,8 +30,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
-import com.tonilopezmr.login.PersonProfile;
+import com.tonilopezmr.login.UserProfile;
 import com.tonilopezmr.login.SignInActivity;
+import com.tonilopezmr.login.providers.Provider;
+import com.tonilopezmr.login.providers.SignInManager;
 
 /**
  * @author Antonio López.
@@ -107,7 +109,7 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
         signInManager.storeUserLogedInPreferences(this);
         if (Plus.PeopleApi.getCurrentPerson(googleApiClient) != null) {
             final Person person = Plus.PeopleApi.getCurrentPerson(googleApiClient);
-            activity.onConnectionComplete(new PersonProfile() {
+            activity.onConnectionComplete(new UserProfile() {
                 @Override
                 public String getId() {
                     return person.getId();
