@@ -104,9 +104,6 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
 
     @Override
     public void onConnected(Bundle bundle) {
-        signInManager.linkProvider(this);
-        signInClicked = false;
-        signInManager.storeUserLogedInPreferences(this);
         if (Plus.PeopleApi.getCurrentPerson(googleApiClient) != null) {
             final Person person = Plus.PeopleApi.getCurrentPerson(googleApiClient);
             activity.onConnectionComplete(new UserProfile() {
@@ -130,6 +127,10 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
                     return Uri.parse(person.getImage().getUrl());
                 }
             });
+
+            signInManager.linkProvider(this);
+            signInClicked = false;
+            signInManager.storeUserLogedInPreferences(this);
         }
     }
 

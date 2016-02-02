@@ -30,7 +30,7 @@ public class SignInFacebook implements Provider {
 
     private OnLoginFacebookCallback loginCallback;
 
-    public SignInFacebook(SignInActivity signInActivity){
+    public SignInFacebook(SignInActivity signInActivity) {
         this.signInManager = SignInManager.getInstance(signInActivity.getApplicationContext());
         this.activity = signInActivity;
     }

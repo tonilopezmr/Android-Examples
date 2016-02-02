@@ -43,7 +43,6 @@ public class SignInTwitter implements Provider {
 
     private void connect(final TwitterSession session){
         if (twitterCallback != null){
-            manager.storeUserLogedInPreferences(this);
             new MyTwitterApi(session).getTwitterService().show(session.getUserId(), session.getUserName(), false, twitterCallback);
         }else{
             throw new IllegalStateException("SignInTwitter: Callback must not be null, did you call setCallback?");
@@ -80,6 +79,7 @@ public class SignInTwitter implements Provider {
         public void success(Result<TwitterSession> result) {
             // The TwitterSession is also available through:
             // Twitter.getInstance().core.getSessionManager().getActiveSession()
+            manager.storeUserLogedInPreferences(SignInTwitter.this);
             TwitterSession session = result.data;
             manager.linkProvider(SignInTwitter.this);
             connect(session);
