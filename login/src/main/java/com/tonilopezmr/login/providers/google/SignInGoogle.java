@@ -155,6 +155,8 @@ public class SignInGoogle implements Provider, GoogleApiClient.ConnectionCallbac
                     googleApiClient.connect();
                     Log.e(this.getClass().getCanonicalName(), e.getMessage());
                 }
+            }else{
+                activity.userIsntLogged();
             }
         }
     }
