@@ -1,1 +1,1 @@
-include ':navigationview', ':animations', ':login', ':network'
+include ':navigationview', ':animations', ':login', ':network', ':dagger2'
