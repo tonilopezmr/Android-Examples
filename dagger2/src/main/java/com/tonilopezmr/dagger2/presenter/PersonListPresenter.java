@@ -5,6 +5,8 @@ import com.tonilopezmr.dagger2.domain.usecase.GetAllPersons;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * @author Antonio López.
  */
@@ -13,6 +15,7 @@ public class PersonListPresenter implements Presenter<PersonListPresenter.View> 
     private final GetAllPersons personsUseCase;
     private  PersonListPresenter.View view;
 
+    @Inject
     public PersonListPresenter(GetAllPersons personsUseCase) {
         this.personsUseCase = personsUseCase;
     }

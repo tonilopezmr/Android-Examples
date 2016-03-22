@@ -8,12 +8,15 @@ import com.tonilopezmr.dagger2.domain.PersonRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * @author Antonio López.
  */
 public class GetAllPersons {
     private final PersonRepository repository;
 
+    @Inject
     public GetAllPersons(PersonRepository repository) {
         this.repository = repository;
     }

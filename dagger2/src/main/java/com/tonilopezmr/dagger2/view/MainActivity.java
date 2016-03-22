@@ -11,13 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.tonilopezmr.dagger2.PersonApplication;
 import com.tonilopezmr.dagger2.R;
 import com.tonilopezmr.dagger2.domain.Person;
-import com.tonilopezmr.dagger2.domain.PersonRepository;
-import com.tonilopezmr.dagger2.domain.usecase.GetAllPersons;
 import com.tonilopezmr.dagger2.presenter.PersonListPresenter;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * @author Antonio López.
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements PersonListPresent
 
     private PersonAdapter adapter;
 
+    @Inject
     PersonListPresenter presenter;
 
     @Override
@@ -37,16 +39,21 @@ public class MainActivity extends AppCompatActivity implements PersonListPresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initDependencyInjector();
         initToolbar();
         initFloatinActionButton();
         initRecyclerView();
         initEmptyCaseView();
         initLoadingView();
 
-        GetAllPersons personsUseCase = new GetAllPersons(new PersonRepository());
-        presenter = new PersonListPresenter(personsUseCase);
+
         presenter.setView(this);
         presenter.init();
+    }
+
+    private void initDependencyInjector() {
+        PersonApplication app = (PersonApplication) getApplication();
+        app.getMainComponent().inject(this);
     }
 
     private void initLoadingView() {
