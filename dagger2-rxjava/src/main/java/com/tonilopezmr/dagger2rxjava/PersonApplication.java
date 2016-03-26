@@ -5,6 +5,7 @@ import android.support.annotation.VisibleForTesting;
 
 import com.tonilopezmr.dagger2rxjava.di.DaggerMainComponent;
 import com.tonilopezmr.dagger2rxjava.di.MainComponent;
+import com.tonilopezmr.dagger2rxjava.di.MainModule;
 
 /**
  * @author Antonio López.
@@ -15,7 +16,9 @@ public class PersonApplication extends Application{
 
     @Override public void onCreate() {
         super.onCreate();
-        mainComponent = DaggerMainComponent.create();
+        mainComponent = DaggerMainComponent.builder()
+                .mainModule(new MainModule())
+                .build();
     }
 
     public MainComponent getMainComponent() {

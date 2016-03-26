@@ -83,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements PersonListPresent
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.onPause();
+    }
+
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -124,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements PersonListPresent
     public void showPersons(List<Person> persons) {
         adapter.addAll(persons);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError() {
+        Snackbar.make(findViewById(R.id.coordinator_layout), "RAMDOM ERROR", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
