@@ -3,8 +3,6 @@ package com.tonilopezmr.dagger2rxjava.domain.usecase;
 import com.tonilopezmr.dagger2rxjava.domain.Person;
 import com.tonilopezmr.dagger2rxjava.domain.PersonRepositoryImp;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -14,7 +12,7 @@ import rx.Scheduler;
 /**
  * @author Antonio López.
  */
-public class GetAllPersonsUseCase extends UseCase<List<Person>>{
+public class GetAllPersonsUseCase extends UseCase<Person>{
     private final PersonRepositoryImp repository;
 
     private final Scheduler uiThread;
@@ -28,7 +26,7 @@ public class GetAllPersonsUseCase extends UseCase<List<Person>>{
     }
 
     @Override
-    protected Observable<List<Person>> buildUseCaseObservable() {
+    protected Observable<Person> buildUseCaseObservable() {
         return repository.getAll()
                 .observeOn(uiThread)
                 .subscribeOn(executorThread);

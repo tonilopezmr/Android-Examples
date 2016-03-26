@@ -35,15 +35,14 @@ public class PersonRepositoryImp implements PersonRepository{
         persons.add(new Person("Maria"));
     }
 
-    public Observable<List<Person>> getAll(){
+    public Observable<Person> getAll(){
         return Observable.create(subscriber -> {
-            fakeWait();
-            if (new Random().nextInt(5) != 3){
-                subscriber.onNext(persons);
-                subscriber.onCompleted();
-            }else{
-                subscriber.onError(new Exception());
+            for (Person person : persons) {
+                fakeWait();
+                if (new Random().nextInt(5) != 3) subscriber.onNext(person);
+                else subscriber.onError(new Exception());
             }
+            subscriber.onCompleted();
         });
     }
 

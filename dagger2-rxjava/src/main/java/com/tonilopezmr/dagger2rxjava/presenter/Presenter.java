@@ -8,7 +8,7 @@ public interface Presenter <T extends Presenter.View>{
     void init();
     void setView(T view);
 
-    void onPause();
+    void onDestroy();
 
     interface View {
         void showLoading();

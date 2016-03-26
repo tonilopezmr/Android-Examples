@@ -1,7 +1,5 @@
 package com.tonilopezmr.dagger2rxjava.domain;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**
@@ -9,6 +7,6 @@ import rx.Observable;
  */
 public interface PersonRepository {
 
-    Observable<List<Person>> getAll();
+    Observable<Person> getAll();
     Observable<Person> get(Person person);
 }

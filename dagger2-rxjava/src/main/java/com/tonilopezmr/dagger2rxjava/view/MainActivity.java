@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements PersonListPresent
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        presenter.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 
     private void initToolbar() {

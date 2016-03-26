@@ -3,6 +3,7 @@ package com.tonilopezmr.dagger2rxjava.presenter;
 import com.tonilopezmr.dagger2rxjava.domain.Person;
 import com.tonilopezmr.dagger2rxjava.domain.usecase.GetAllPersonsUseCase;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,14 +35,10 @@ public class PersonListPresenter implements Presenter<PersonListPresenter.View> 
                 .subscribe(this::onPersonReceived, this::showError);
     }
 
-    private void onPersonReceived(List<Person> persons) {
-        view.showPersons(persons);
+    private void onPersonReceived(Person person) {
+        view.showPersons(Arrays.asList(person));
         view.hideLoading();
-        if (persons.isEmpty()){
-            view.showEmptyView();
-        }else{
-            view.hideEmptyView();
-        }
+        view.hideEmptyView();
     }
 
     private void showError(Throwable error){
@@ -55,7 +52,7 @@ public class PersonListPresenter implements Presenter<PersonListPresenter.View> 
     }
 
     @Override
-    public void onPause() {
+    public void onDestroy() {
         personsSubscription.unsubscribe();
     }
 
