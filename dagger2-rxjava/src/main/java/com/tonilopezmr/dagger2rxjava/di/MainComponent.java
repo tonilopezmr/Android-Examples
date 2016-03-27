@@ -16,6 +16,6 @@ import rx.Scheduler;
 
     void inject(MainActivity activity);
 
-    @Named("ui_thread") Scheduler executorThread();
-    @Named("executor_thread") Scheduler mainThread();
+    @Named("executorThread") Scheduler executorThread();
+    @Named("mainThread") Scheduler mainThread();
 }
