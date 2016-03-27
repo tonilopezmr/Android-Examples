@@ -13,6 +13,7 @@ import rx.Scheduler;
  * @author Antonio López.
  */
 public class GetAllPersonsUseCase extends UseCase<Person>{
+    private static final Integer MAX_ATTEMPS = 2;
     private final PersonRepositoryImp repository;
 
     private final Scheduler uiThread;
@@ -29,6 +30,7 @@ public class GetAllPersonsUseCase extends UseCase<Person>{
     protected Observable<Person> buildUseCaseObservable() {
         return repository.getAll()
                 .observeOn(uiThread)
-                .subscribeOn(executorThread);
+                .subscribeOn(executorThread)
+                .retry((attemps, error) -> error instanceof Exception && attemps < MAX_ATTEMPS);
     }
 }
