@@ -20,11 +20,11 @@ import rx.schedulers.Schedulers;
         return new PersonRepositoryImp();
     }
 
-    @Provides @Named("executor_thread") public Scheduler provideExecutorThread(){
+    @Provides @Named("executorThread") public Scheduler provideExecutorThread(){
         return Schedulers.newThread();
     }
 
-    @Provides @Named("ui_thread") public Scheduler provideMainThread(){
+    @Provides @Named("mainThread") public Scheduler provideMainThread(){
         return AndroidSchedulers.mainThread();
     }
 }

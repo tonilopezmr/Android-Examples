@@ -21,7 +21,7 @@ public class GetAllPersonsUseCase extends UseCase<List<Person>>{
     private final Scheduler executorThread;
 
     @Inject
-    public GetAllPersonsUseCase(PersonRepositoryImp repository, @Named("ui_thread") Scheduler uiThread, @Named("executor_thread") Scheduler executorThread) {
+    public GetAllPersonsUseCase(PersonRepositoryImp repository, @Named("mainThread") Scheduler uiThread, @Named("executorThread") Scheduler executorThread) {
         this.repository = repository;
         this.uiThread = uiThread;
         this.executorThread = executorThread;
